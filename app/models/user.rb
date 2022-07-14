@@ -49,6 +49,8 @@ class User < ApplicationRecord
          :timeoutable,
          :omniauthable
 
+  has_many :listings, dependent: :destroy, foreign_key: :host_id
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, auth_id: auth.uid).first_or_create do |user|
       user.email = auth.info.email
